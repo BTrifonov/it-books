@@ -1,0 +1,32 @@
+First exercise
+
+function findMin(firstArg, secondArg) {
+	return firstArg < secondArg ? firstArg : secondArg;
+}
+
+
+Second exercise
+
+function isEvenOrOdd(number) {
+	if(number==0) return true;
+	else if(number==1) return false;
+
+	return isEvenOrOdd(number > 0 ? number : -number)
+}
+
+Third exercise
+function countBs(text) {
+ let count = 0;
+ for(let i=0;i<text.length;i+=1) {
+   if(text[i]==="B") count+=1;
+ }
+ return count;
+}
+
+function countChar(text, sym) {
+  let count = 0;
+  for(let i=0;i<text.length;i+=1) {
+    if(text[i]===sym) count+=1;
+  }
+  return count;
+}

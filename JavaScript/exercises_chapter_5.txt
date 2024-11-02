@@ -1,0 +1,60 @@
+Chapter 5, Higher Order Function
+
+//supports multiple levels of nesting
+function flatten(inputArr) {
+  return inputArr.reduce((acc, val) => Array.isArray(val)
+    ? acc.concat(flatten(val))
+    : acc.concat(val), []);
+}
+
+//support only a single level of nesting
+function myFlatten(inputArr) {
+  return inputArr.reduce((a, b)=>a.concat(b),[])
+}
+
+
+//Second exercise
+//----------------------------------------------------------------------------
+function higherOrderLoop(val, test, update, body) {
+  const finalValues = [];
+  for (let item of val) {
+    const check = test(item);
+    if (!check) continue;
+    const newVal = body(item);
+    const result = update(newVal);
+    finalValues.push(result);
+  }
+  return finalValues;
+}
+
+const res = higherOrderLoop([1, 2, 3], n => n < 4, n => n * 2, n => n + 1);
+console.log(res); // [4, 6, 8]
+
+//Third exercise
+//----------------------------------------------------------------------------
+function everyPredicate(array, func) {
+  for(element of array) {
+    if(!func(element))
+      return false;
+  }
+
+  return true;
+}
+
+//similar to merge sort as an approach
+function everyPredicateRec(array, func) {
+  if(array.length==0)
+    return true;
+
+  let middle = array.length / 2;
+  console.log(middle);
+  let leftSubArrTest = everyPredicate(array.slice(0, middle), func);
+  let rightSubArrTest = everyPredicate(array.slice(middle, array.length), func);
+
+  return leftSubArrTest && rightSubArrTest;
+}
+
+//Fourth exercise
+
+
+

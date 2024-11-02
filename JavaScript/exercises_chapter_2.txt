@@ -1,0 +1,22 @@
+2.2 Chessboard exercise
+
+//O(n) solution
+	let evenPattern = "";
+	let oddPattern = "";
+
+//O(n) complexity time
+for(let i = 0; i < 8; i+=1) {
+  if(i%2==0) {
+    evenPattern += "#";
+    oddPattern += " ";
+  } else {
+    evenPattern += " ";
+    oddPattern += "#";
+  }
+}
+
+//O(n) complexity time
+for(let i=0;i < 8;i++) {
+  if(i%2==0) console.log(oddPattern);
+  else console.log(evenPattern);
+}

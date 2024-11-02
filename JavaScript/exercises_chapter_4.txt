@@ -1,0 +1,158 @@
+List exercise
+function arrayToList(inputArr) {
+  //initial value should be undefined
+  let list;
+  
+  for(element of inputArr) {
+    list = prepend(element, list);
+  }
+
+  return list;
+}
+
+function listToArray(list) {
+  let resultArr = [];
+  
+  let next = list;
+
+  while(next!==null){
+    resultArr.push(next.value);
+    next = next.rest;
+  }
+
+  return resultArr;
+}
+
+//Helper functions
+function prepend(element, list) {
+  // 2 cases
+  // Empty and not empty list
+  if(list===undefined) {
+    return {
+      value: element, 
+      rest: null
+    }
+  }
+
+  return {
+    value: element, 
+    rest: list
+  }
+}
+
+function nth(list, number) {
+  if(number < 0)
+    throw new Error("Input should not be < 0")
+  
+  let next = list;
+  while(next && number > 0) {
+    next = next.rest
+    number--;
+  }
+  return next ? next.value : "Index out of range";
+}
+
+function nthRec(list, number) {
+ if(list===null) {
+    // reached end of list
+    throw new Error("Index out of range!");
+    return;
+ }
+  
+ if(number===0) {
+    return list.value
+ } else if(number < 0) {
+   throw new Error("Negative index");
+   return;
+ }
+   
+
+ return nthRec(list.rest, number-=1)
+}
+
+console.log(
+  nthRec(
+   {
+     value: 1,
+     rest: {
+       value: 2,
+       rest: null  
+     }
+   }
+  , -1)
+);
+
+DeepEqual
+-----------------------------------------------------
+function deepEqual(obj1, obj2) {
+  //first check if any of them is null
+  if(obj1 === null && obj2 === null) {
+    //both objects are null
+    return true;
+  } else if(obj1 === null || obj2 === null) {
+    //one of the objects is null, but not both
+    return false;
+  } else if((typeof obj1)!=='object' && (typeof obj2)!=='object') {
+    //both are basic data types
+    return obj1===obj2; 
+  } else if((typeof obj1)==='object' && (typeof obj2)==='object') {
+    //both are object, compare properties
+    const keysObj1 = Object.keys(obj1);
+    const keysObj2 = Object.keys(obj2);
+
+    console.log(keysObj1);
+    console.log(keysObj2);
+    
+    //key sets not the same, then false
+    if(!checkEqualKeys(keysObj1, keysObj2))
+      return false;
+
+    let equality = true;
+    for(key of keysObj1) {
+      equality = deepEqual(obj1[`${key}`], obj2[`${key}`]);
+    }
+
+    return equality;
+  }
+  else {
+    return false;
+  }
+}
+
+function checkEqualKeys(keysObj1, keysObj2) {
+  //check if both key sets are the same
+  for(key of keysObj1) {
+    if(!keysObj2.includes(key))
+      return false;
+  }
+
+  return true;
+}
+
+CoPilot Version
+---------------------------------------------------------------
+function deepEqual(obj1, obj2) {
+  if (obj1 === obj2) {
+    return true; // Handles strict equality for basic types and null check
+  }
+
+  if (obj1 == null || obj2 == null || typeof obj1 !== 'object' || typeof obj2 !== 'object') {
+    return false; // Handles null, undefined, and different types
+  }
+
+  const keysObj1 = Object.keys(obj1);
+  const keysObj2 = Object.keys(obj2);
+
+  if (keysObj1.length !== keysObj2.length) {
+    return false; // Quick length check
+  }
+
+  for (let key of keysObj1) {
+    if (!keysObj2.includes(key) || !deepEqual(obj1[key], obj2[key])) {
+      return false; // Check keys and their values recursively
+    }
+  }
+
+  return true;
+}
+
